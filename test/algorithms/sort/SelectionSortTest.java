@@ -1,6 +1,9 @@
 package algorithms.sort;
 
-import java.util.*;
+import org.junit.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +26,8 @@ public class SelectionSortTest {
         list[3] = 36;
         list[4] = 62;
         SelectionSort.sort(list);
+        Integer[] ans1 = {7,16,36,62,623};
+        Assert.assertArrayEquals(ans1, SelectionSort.sort(list));
 
         String s[] = {
             new String("D4"),
@@ -30,14 +35,16 @@ public class SelectionSortTest {
             new String("B2"),
             new String("A12")
         };
-//        SelectionSort.sort(s);
-//        Collections.sort(s);
+        String[] ans = {"A12", "B2", "C3", "D4"};
+        Assert.assertArrayEquals(ans, SelectionSort.sort(s));
 
-        List<String> listString = new LinkedList<String>();
+        List<String> listString = new ArrayList<String>();
         listString.add("A1");
         listString.add("A5");
         listString.add("A3");
         listString.add("B1");
-        //SelectionSort.sort(listString);
+        ans = new String[]{"A1", "A3", "A5", "B1"};
+
+        Assert.assertArrayEquals(ans, SelectionSort.sort(listString.toArray(new String[listString.size()])));
     }
 }

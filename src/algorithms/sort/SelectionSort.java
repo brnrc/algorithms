@@ -15,7 +15,7 @@ public class SelectionSort {
      * In-place selection sort
      * @param c
      */
-    public static void sort(Comparable[] c){
+    public static Comparable[] sort(Comparable[] c){
         int min;
         for (int i = 0; i < c.length-1; i++){
             min = minFor(c, i+1);
@@ -24,12 +24,13 @@ public class SelectionSort {
             }
         }
         printList(c);
-        return ;
+        return c;
     }
 
     private static void printList(Comparable[] c) {
         for (int i = 0; i < c.length; i++)
             System.out.print(c[i]+" ");
+        System.out.println();
     }
 
     private static void swap(Comparable[] c, int i, int j) {
@@ -48,6 +49,4 @@ public class SelectionSort {
     private static boolean less(Comparable a, Comparable b) {
         return a.compareTo(b) < 0;
     }
-
-
 }
