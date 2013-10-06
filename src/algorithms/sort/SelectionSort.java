@@ -7,10 +7,7 @@
  */
 package algorithms.sort;
 
-public class SelectionSort {
-    public SelectionSort(){
-    }
-
+public class SelectionSort extends AbstractSort{
     /**
      * In-place selection sort
      * @param c
@@ -27,26 +24,12 @@ public class SelectionSort {
         return c;
     }
 
-    private static void printList(Comparable[] c) {
-        for (int i = 0; i < c.length; i++)
-            System.out.print(c[i]+" ");
-        System.out.println();
-    }
-
     private static void swap(Comparable[] c, int i, int j) {
         Comparable aux = c[i];
         c[i] = c[j];
         c[j] = aux;
     }
 
-    private static int minFor(Comparable[] comparable, int start) {
-        int min = start;
-        for (int i = start; i < comparable.length; i++)
-            if (less(comparable[i], comparable[min])) min = i;
-        return min;
-    }
 
-    private static boolean less(Comparable a, Comparable b) {
-        return a.compareTo(b) < 0;
-    }
+
 }

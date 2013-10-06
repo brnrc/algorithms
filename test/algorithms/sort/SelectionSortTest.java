@@ -25,9 +25,9 @@ public class SelectionSortTest {
         list[2] = 16;
         list[3] = 36;
         list[4] = 62;
-        SelectionSort.sort(list);
         Integer[] ans1 = {7,16,36,62,623};
         Assert.assertArrayEquals(ans1, SelectionSort.sort(list));
+
 
         String s[] = {
             new String("D4"),
