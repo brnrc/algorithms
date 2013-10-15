@@ -1,7 +1,6 @@
 package algorithms.sort;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,10 +13,6 @@ import java.util.List;
  * Time: 6:44 PM
  */
 public class InsertionSortTest {
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @Test
     public void testSort() throws Exception {

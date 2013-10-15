@@ -11,6 +11,12 @@ public abstract class AbstractSort {
         return a.compareTo(b) < 0;
     }
 
+    protected static void swap(Comparable[] c, int i, int j) {
+        Comparable aux = c[i];
+        c[i] = c[j];
+        c[j] = aux;
+    }
+
     protected static int minFor(Comparable[] comparable, int start) {
         int min = start;
         for (int i = start; i < comparable.length; i++)

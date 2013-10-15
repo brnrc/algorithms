@@ -23,13 +23,4 @@ public class SelectionSort extends AbstractSort{
         printList(c);
         return c;
     }
-
-    private static void swap(Comparable[] c, int i, int j) {
-        Comparable aux = c[i];
-        c[i] = c[j];
-        c[j] = aux;
-    }
-
-
-
 }
