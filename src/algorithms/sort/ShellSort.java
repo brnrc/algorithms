@@ -7,7 +7,7 @@ package algorithms.sort;
  * Time: 3:52 PM
  */
 public class ShellSort extends AbstractSort{
-    public Comparable[] sort(Comparable[] c){
+    public static Comparable[] sort(Comparable[] c){
         Integer N = c.length;
         // Set the h-sort incremental sequence,
         // using 3x + 1 Knuth's sequence

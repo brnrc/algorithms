@@ -20,7 +20,6 @@ public class SelectionSort extends AbstractSort{
                 swap(c, i, min);
             }
         }
-        printList(c);
         return c;
     }
 }

@@ -16,7 +16,6 @@ public class InsertionSort extends AbstractSort {
                 c[j + 1] = c[j];
             c[j+1] = key;
         }
-        printList(c);
         return c;
     }
 }
