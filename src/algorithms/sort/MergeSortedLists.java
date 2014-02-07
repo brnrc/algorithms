@@ -6,6 +6,11 @@ import java.util.PriorityQueue;
 
 /**
  * Created by ribeirob on 03/02/14.
+ *
+ * Sort a list of N lists of P elements.
+ * M = N*P
+ * O(n log(M))    Time complexity
+ *
  */
 public class MergeSortedLists<T extends Comparable<T>> {
 
