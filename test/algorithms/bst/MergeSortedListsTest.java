@@ -1,5 +1,6 @@
-package algorithms.sort;
+package algorithms.bst;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -81,31 +82,31 @@ public class MergeSortedListsTest extends TestCase {
     }
 
     public void test10() throws Exception {
-        assertEquals(list10, listOfLists10.sort());
+        Assert.assertEquals(list10, listOfLists10.sort());
     }
 
     public void test10_5_2() throws Exception {
-        assertEquals(list10_5_2, listOfLists10_5_2.sort());
+        Assert.assertEquals(list10_5_2, listOfLists10_5_2.sort());
     }
 
     public void test1k() throws Exception {
-        assertEquals(list1k, listOfLists1k.sort());
+        Assert.assertEquals(list1k, listOfLists1k.sort());
     }
 
     public void test10k() throws Exception {
-        assertEquals(list10k, listOfLists10k.sort());
+        Assert.assertEquals(list10k, listOfLists10k.sort());
     }
 
     public void test100k() throws Exception {
-        assertEquals(list100k, listOfLists100k.sort());
+        Assert.assertEquals(list100k, listOfLists100k.sort());
     }
 
     public void test100k_50_2k() throws Exception {
-        assertEquals(list100k_50_2k, listOfLists100k_50_2k.sort());
+        Assert.assertEquals(list100k_50_2k, listOfLists100k_50_2k.sort());
     }
 
     public void test1kk_500_2k() throws Exception {
-        assertEquals(list1kk_500_2k, listOfLists1kk_500_2k.sort());
+        Assert.assertEquals(list1kk_500_2k, listOfLists1kk_500_2k.sort());
     }
 
 //    public void test1kk() throws Exception {

@@ -16,7 +16,7 @@ import java.util.Random;
 public class SortTest {
     private Integer[] testArray;
     private Integer[] testArraySorted;
-    private int size = 100000;
+    private int size = 10000;
     private int range = 10;
 
     @Before

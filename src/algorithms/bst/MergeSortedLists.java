@@ -1,4 +1,4 @@
-package algorithms.sort;
+package algorithms.bst;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +34,21 @@ public class MergeSortedLists<T extends Comparable<T>> {
     }
 
     private PriorityQueue<Node<T>> createHeap(){
-        PriorityQueue<Node<T>> p = new PriorityQueue<Node<T>>();
+        PriorityQueue<Node<T>> pq = new PriorityQueue<Node<T>>();
 
-        //add first element of every list to the heap
-        for(int i = 0; i < mListOfLists.size(); i++){
-            List<T> subList = mListOfLists.get(i);
+        //add first element of every list to the heap and remove from the list
+        int i = 0;
+        for(List<T> subList : mListOfLists){
             if(subList != null){
                 T value = subList.get(0);
                 if(value != null){
-                    Node<T> n = new Node<T>(value, i);
-                    p.add(n);
+                    pq.add(new Node<T>(value, i));
                     subList.remove(0);
                 }
             }
+            i++;
         }
-        return p;
+        return pq;
     }
 
     private T next() {
