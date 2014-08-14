@@ -4,21 +4,21 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Random;
-
 public class BSTTest {
     private BST<String, Integer> map;
-    private char[] chars;
-    private Random random;
+    private BST<String, Integer> mapForDeletion;
 
     @Before
     public void setUp() throws Exception {
-
-        chars = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
-        random = new Random();
-        for (int i = 0; i < chars.length; i++) {
-            char c = chars[random.nextInt(chars.length)];
-        }
+        mapForDeletion = new BST<>();
+        mapForDeletion.put("S", 1);
+        mapForDeletion.put("X", 2);
+        mapForDeletion.put("E", 3);
+        mapForDeletion.put("A", 3);
+        mapForDeletion.put("C", 3);
+        mapForDeletion.put("R", 3);
+        mapForDeletion.put("H", 3);
+        mapForDeletion.put("M", 3);
 
         map = new BST<>();
         map.put("A", 1);
@@ -61,10 +61,10 @@ public class BSTTest {
     }
 
     @Test
-    public void testInsertion() throws Exception {
-        Random randomInt = new Random();
-        for (int i = 0; i < 1000; i++) {
-            map.put(String.valueOf(chars[random.nextInt(chars.length)]), randomInt.nextInt(10));
-        }
+    public void testDeletion() throws Exception {
+        Assert.assertEquals(true, mapForDeletion.contains("H"));
+        mapForDeletion.delete("H");
+        Assert.assertEquals(false, mapForDeletion.contains("H"));
+
     }
 }

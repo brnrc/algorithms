@@ -110,4 +110,36 @@ public class BST<Key extends Comparable<Key>, Value> implements SymbolTable<Key,
         if (t != null) return t;
         return node;
     }
+
+    @Override
+    public void delete(Key key) {
+        root = delete(root, key);
+    }
+
+    private Node delete(Node node, Key key) {
+        if(node == null) return null;
+        int cmp = key.compareTo(node.key);
+        if(cmp < 0) node.left = delete(node.left, key);
+        else if(cmp > 0) node.right = delete(node.right, key);
+        else {
+            if(node.right == null) return node.left;
+            if(node.left == null) return node.right;
+            else { //Found node with Key key.
+                //Now need to find the min of node.right
+                Node min = min(node.right);
+
+                // Reconstruct min left and right links, to point to node's left and right.
+                // (the last excluding itself)
+                min.right = deleteMin(node.right);
+                min.left = node.left;
+            }
+        }
+        return node;
+    }
+
+    private Node deleteMin(Node node) {
+        if(node.left == null) return node.right;
+        node.left = deleteMin(node.left);
+        return node;
+    }
 }

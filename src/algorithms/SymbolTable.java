@@ -11,6 +11,6 @@ public interface SymbolTable<Key extends Comparable<Key>, Value>{
     public Key max();
     public Key floor(Key key);
     public Key ceiling(Key key);
-//    public Value delete(Key key);
+    public void delete(Key key);
 //    public Key select(Value value);
 }
