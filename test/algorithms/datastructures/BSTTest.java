@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import java.util.Random;
 
-public class BSTSymbolTableTest {
-    private BSTSymbolTable<String, Integer> map;
+public class BSTTest {
+    private BST<String, Integer> map;
     private char[] chars;
     private Random random;
 
@@ -20,7 +20,7 @@ public class BSTSymbolTableTest {
             char c = chars[random.nextInt(chars.length)];
         }
 
-        map = new BSTSymbolTable<>();
+        map = new BST<>();
         map.put("A", 1);
         map.put("B", 2);
         map.put("C", 3);

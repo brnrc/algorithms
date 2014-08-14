@@ -5,7 +5,7 @@ import algorithms.SymbolTable;
 /**
  * Created by Bruno Cardoso on 12/08/2014.
  */
-public class BSTSymbolTable<Key extends Comparable<Key>, Value> implements SymbolTable<Key, Value> {
+public class BST<Key extends Comparable<Key>, Value> implements SymbolTable<Key, Value> {
     private Node root;
 
     private class Node{
