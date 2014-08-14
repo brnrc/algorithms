@@ -4,11 +4,22 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class BSTSymbolTableTest {
     private BSTSymbolTable<String, Integer> map;
+    private char[] chars;
+    private Random random;
 
     @Before
     public void setUp() throws Exception {
+
+        chars = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+        random = new Random();
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[random.nextInt(chars.length)];
+        }
+
         map = new BSTSymbolTable<>();
         map.put("A", 1);
         map.put("B", 2);
@@ -17,7 +28,7 @@ public class BSTSymbolTableTest {
     }
 
     @Test
-    public void testPutAndGet() throws Exception {
+    public void testGet() throws Exception {
         Assert.assertEquals(1, (int) map.get("A"));
         Assert.assertEquals(2, (int) map.get("B"));
         Assert.assertEquals(3, (int) map.get("C"));
@@ -29,5 +40,31 @@ public class BSTSymbolTableTest {
         Assert.assertEquals(true, map.contains("A"));
         Assert.assertEquals(true, map.contains("K"));
         Assert.assertEquals(false, map.contains("Z"));
+    }
+
+    @Test
+    public void testFloor() throws Exception {
+        Assert.assertEquals("A", map.floor("A"));
+        Assert.assertEquals("B", map.floor("B"));
+        Assert.assertEquals("C", map.floor("D"));
+        Assert.assertEquals("C", map.floor("F"));
+        Assert.assertEquals("K", map.floor("Z"));
+    }
+
+    @Test
+    public void testCeiling() throws Exception {
+        Assert.assertEquals("A", map.ceiling("A"));
+        Assert.assertEquals("B", map.ceiling("B"));
+        Assert.assertEquals("K", map.ceiling("D"));
+        Assert.assertEquals("K", map.ceiling("F"));
+        Assert.assertEquals(null, map.ceiling("Z"));
+    }
+
+    @Test
+    public void testInsertion() throws Exception {
+        Random randomInt = new Random();
+        for (int i = 0; i < 1000; i++) {
+            map.put(String.valueOf(chars[random.nextInt(chars.length)]), randomInt.nextInt(10));
+        }
     }
 }

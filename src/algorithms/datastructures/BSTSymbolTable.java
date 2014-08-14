@@ -56,4 +56,58 @@ public class BSTSymbolTable<Key extends Comparable<Key>, Value> implements Symbo
     public boolean contains(Key key) {
         return get(key) != null;
     }
+
+    @Override
+    public Key min() {
+        return min(root).key;
+    }
+
+    private Node min(Node node) {
+        if(node.left == null) return node;
+        return min(node.left);
+    }
+
+    @Override
+    public Key max() {
+        return max(root).key;
+    }
+
+    private Node max(Node node) {
+        if(node.right == null) return node;
+        return max(node.right);
+    }
+
+    @Override
+    public Key floor(Key key) {
+        Node node = floor(root, key);
+        if(node == null) return null;
+        return node.key;
+    }
+
+    private Node floor(Node node, Key key) {
+        if(node == null) return null;
+        int cmp = key.compareTo(node.key);
+        if(cmp == 0) return node;
+        else if(cmp < 0) return floor(node.left, key);
+        Node t = floor(node.right, key);
+        if (t != null) return t;
+        else return node;
+    }
+
+    @Override
+    public Key ceiling(Key key) {
+        Node ceil = ceiling(root, key);
+        if(ceil == null) return null;
+        return ceil.key;
+    }
+
+    private Node ceiling(Node node, Key key) {
+        if(node == null) return null;
+        int cmp = key.compareTo(node.key);
+        if (cmp == 0) return node;
+        if (cmp > 0)  return ceiling(node.right, key);
+        Node t = ceiling(node.left, key);
+        if (t != null) return t;
+        return node;
+    }
 }
