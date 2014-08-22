@@ -25,7 +25,7 @@ public class SherlockAndTheBeast {
     private static String iterativeSearchDecent(int n) {
         if (n < 3) return "-1";
 
-        StringBuffer partial = new StringBuffer();
+        StringBuilder partial = new StringBuilder();
         while (n > 10) {
             partial.append("555");
             n -= 3;
@@ -51,7 +51,7 @@ public class SherlockAndTheBeast {
                 partial.append("3333333333");
                 break;
             default:
-                partial = new StringBuffer();
+                partial = new StringBuilder();
                 partial.append("-1");
         }
         return partial.toString();
