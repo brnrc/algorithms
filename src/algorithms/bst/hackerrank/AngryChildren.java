@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * Complexity:
+ *  Time : O(N logN)
+ *  Space: O(N)
+ *
  * Created by Bruno Cardoso on 25/08/2014.
  */
 public class AngryChildren {
