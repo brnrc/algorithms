@@ -16,11 +16,11 @@ import java.util.Random;
 public class SortTest {
     private Integer[] testArray;
     private Integer[] testArraySorted;
-    private int size = 10000;
-    private int range = 10;
 
     @Before
     public void setUp() throws Exception {
+        int size = 100000;
+        int range = 10;
         testArray = new Integer[size];
         Random r = new Random();
 
@@ -48,5 +48,9 @@ public class SortTest {
     @Test
     public void testSelectionSort() throws Exception {
         Assert.assertArrayEquals(testArraySorted, SelectionSort.sort(testArray));
+    }
+    @Test
+    public void testQuickSort() throws Exception {
+        Assert.assertArrayEquals(testArraySorted, QuickSort.sort(testArray));
     }
 }
