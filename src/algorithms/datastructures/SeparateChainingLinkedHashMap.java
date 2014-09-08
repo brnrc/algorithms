@@ -12,6 +12,24 @@ public class SeparateChainingLinkedHashMap<K, V> implements IMap<K, V>, Iterable
     private Node<K, V> first;
     private Node<K, V>[] buckets;
 
+    private class Node<K, V>{
+        public K key;
+        public V value;
+        public Node<K, V> next;
+
+        //LinkedHashMap specific pointers
+        public Node<K, V> prevRU; //RU = recently used
+        public Node<K, V> nextRU;
+
+        private Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {return "{" + key + ", " + value + '}';}
+    }
+
     @SuppressWarnings("unchecked")
     public SeparateChainingLinkedHashMap(int capacity) {
         N = capacity;
@@ -79,32 +97,9 @@ public class SeparateChainingLinkedHashMap<K, V> implements IMap<K, V>, Iterable
         return key.hashCode() % buckets.length;
     }
 
-    /**
-     * Returns an iterator over elements of type {@code T}.
-     *
-     * @return an Iterator.
-     */
     @Override
     public Iterator iterator() {
         return new SeparateChainingHashMapIterator();
-    }
-
-    private class Node<K, V>{
-        public K key;
-        public V value;
-        public Node<K, V> next;
-
-        //LinkedHashMap specific pointers
-        public Node<K, V> prevRU; //RU = recently used
-        public Node<K, V> nextRU;
-
-        private Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {return "{" + key + ", " + value + '}';}
     }
 
     private class SeparateChainingHashMapIterator implements Iterator<Object> {
