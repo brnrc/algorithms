@@ -3,16 +3,10 @@
 public class IdentifyingWood {
 	
 	public String check(String s, String t) {
-        int lastMatch = 0;
-        for (int i = 0; i < t.length(); i++) {
-            for (int j = lastMatch; j < s.length(); j++) {
-                if(s.charAt(j) == t.charAt(i)){
-                    lastMatch = j+1;
-                    if(i == t.length()-1) return "Yep, it's wood.";
-                    break;
-                }
-            }
+        int j = 0;
+        for (int i = 0; i < s.length() && j < t.length(); i++) {
+            if(t.charAt(j) == s.charAt(i)) j++;
         }
-        return "Nope.";
+        return (j == t.length()) ? "Yep, it's wood." : "Nope.";
 	}
 }
