@@ -3,10 +3,7 @@ package algorithms.datastructures.tree;
 import algorithms.SymbolTable;
 import algorithms.datastructures.Pair;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by Bruno Cardoso on 15/08/2014.
@@ -28,20 +25,19 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             this.key = key;
             this.color = RED;
         }
-
         @Override
         public String toString() {
             return this.val.toString();
         }
 
     }
+
     // Delegates put operation to BST's put.
     @Override
     public void put(Key key, Value val) {
         root = put(root, key, val);
         root.color = BLACK;
     }
-
 
     // Recursive implementation of put operation in a BST.
     private Node put(Node h, Key key, Value val) {
@@ -59,6 +55,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
         return h;
     }
+
 
     private void colorFlip(Node h) {
         h.color = !h.color;
@@ -206,9 +203,38 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                 return inOrderIterator();
             case POST_ORDER:
                 return postOrderIterator();
+            case LEVEL_ORDER:
+                return levelOrderIterator();
             default:
                 return preOrderIterator();
         }
+    }
+
+    private Iterator<Key> levelOrderIterator() {
+        return new Iterator<Key>(){
+            Node p;
+            Queue<Node> q = new LinkedList<>();
+            {
+                q.add(root);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return !q.isEmpty();
+            }
+
+            @Override
+            public Key next() {
+                p = q.poll();
+                Key ans = null;
+                if(p != null){
+                    ans = p.key;
+                    if(p.l != null) q.add(p.l);
+                    if(p.r != null) q.add(p.r);
+                }
+                return ans;
+            }
+        };
     }
 
     private Iterator<Key> postOrderIterator() {
@@ -363,6 +389,60 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         postWalk(node.l, list);
         postWalk(node.r, list);
         list.add(node.val);
+    }
+
+    public List<Value> fastWalk(TreeIteratorOrder order) {
+        List<Value> l = new ArrayList<>();
+
+        switch (order){
+            case PRE_ORDER:
+//                preWalk(root);
+                break;
+            case IN_ORDER:
+//                inWalk(root);
+                break;
+            case POST_ORDER:
+                l = postWalkFast();
+                break;
+            case LEVEL_ORDER:
+                break;
+        }
+        return l;
+    }
+
+    private List<Value> postWalkFast() {
+        List<Value> result = new ArrayList<>();
+
+        Pair<Node, Boolean> p;
+        Stack<Pair<Node, Boolean>> s = new Stack<>();
+
+        if(root == null)
+            return null;
+
+        s.push(new Pair<>(root, false));
+        while (!s.isEmpty()){
+            p = s.peek();
+
+            //check if it is marked
+            if(p.second){
+                result.add(p.first.val);
+                s.pop();
+            }
+            else {
+                //mark node
+                p.second = true;
+                if(hasChildren(p.first)){
+                    if(p.first.r != null) s.push(new Pair<>(p.first.r, false));
+                    if(p.first.l != null) s.push(new Pair<>(p.first.l, false));
+                } else {
+                    // remove
+                    p = s.pop();
+                    result.add(p.first.val);
+                }
+            }
+        }
+
+        return result;
     }
 
     public enum TreeIteratorOrder {
