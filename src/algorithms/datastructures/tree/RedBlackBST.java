@@ -18,7 +18,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
         public Value val;
         public Key key;
-        public Node l, r;
+        public Node left, right;
         public boolean color;
         public Node(Key key, Value val) {
             this.val = val;
@@ -43,15 +43,15 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node put(Node h, Key key, Value val) {
         if(h == null) return new Node(key, val);
 
-        if (isRed(h.l) && isRed(h.r)) colorFlip(h);
+        if (isRed(h.left) && isRed(h.right)) colorFlip(h);
 
         int cmp = key.compareTo(h.key);
-        if(cmp < 0)      h.l = put(h.l, key, val);
-        else if(cmp > 0) h.r = put(h.r, key, val);
+        if(cmp < 0)      h.left = put(h.left, key, val);
+        else if(cmp > 0) h.right = put(h.right, key, val);
         else             h.val = val;
 
-        if(isRed(h.r) && !isRed(h.l)) h = rotateLeft(h);
-        if(!isRed(h.r) && isRed(h.l)) h = rotateRight(h);
+        if(isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if(!isRed(h.right) && isRed(h.left)) h = rotateRight(h);
 
         return h;
     }
@@ -59,8 +59,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
 
     private void colorFlip(Node h) {
         h.color = !h.color;
-        h.l.color = !h.l.color;
-        h.r.color = !h.r.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
     }
 
     private boolean isRed(Node node) {
@@ -77,8 +77,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Value get(Node node, Key key) {
         if(node == null) return null;
         int cmp = key.compareTo(node.key);
-        if      (cmp < 0) return get(node.l, key);
-        else if (cmp > 0) return get(node.r, key);
+        if      (cmp < 0) return get(node.left, key);
+        else if (cmp > 0) return get(node.right, key);
         else return node.val;
     }
 
@@ -93,8 +93,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     }
 
     private Node min(Node node) {
-        if(node.l == null) return node;
-        return min(node.l);
+        if(node.left == null) return node;
+        return min(node.left);
     }
 
     @Override
@@ -103,8 +103,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     }
 
     private Node max(Node node) {
-        if(node.r == null) return node;
-        return max(node.r);
+        if(node.right == null) return node;
+        return max(node.right);
     }
 
     @Override
@@ -118,8 +118,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         if(node == null) return null;
         int cmp = key.compareTo(node.key);
         if(cmp == 0) return node;
-        else if(cmp < 0) return floor(node.l, key);
-        Node t = floor(node.r, key);
+        else if(cmp < 0) return floor(node.left, key);
+        Node t = floor(node.right, key);
         if (t != null) return t;
         else return node;
     }
@@ -135,8 +135,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         if(node == null) return null;
         int cmp = key.compareTo(node.key);
         if (cmp == 0) return node;
-        if (cmp > 0)  return ceiling(node.r, key);
-        Node t = ceiling(node.l, key);
+        if (cmp > 0)  return ceiling(node.right, key);
+        Node t = ceiling(node.left, key);
         if (t != null) return t;
         return node;
     }
@@ -149,43 +149,43 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private Node delete(Node node, Key key) {
         if(node == null) return null;
         int cmp = key.compareTo(node.key);
-        if(cmp < 0) node.l = delete(node.l, key);
-        else if(cmp > 0) node.r = delete(node.r, key);
+        if(cmp < 0) node.left = delete(node.left, key);
+        else if(cmp > 0) node.right = delete(node.right, key);
         else {
-            if(node.r == null) return node.l;
-            if(node.l == null) return node.r;
+            if(node.right == null) return node.left;
+            if(node.left == null) return node.right;
             else { //Found node with Key key.
-                //Now need to find the min of node.r
-                Node min = min(node.r);
+                //Now need to find the min of node.right
+                Node min = min(node.right);
 
-                // Reconstruct min l and r links, to point to node's l and r.
+                // Reconstruct min left and right links, to point to node's left and right.
                 // (the last excluding itself)
-                min.r = deleteMin(node.r);
-                min.l = node.l;
+                min.right = deleteMin(node.right);
+                min.left = node.left;
             }
         }
         return node;
     }
 
     private Node deleteMin(Node node) {
-        if(node.l == null) return node.r;
-        node.l = deleteMin(node.l);
+        if(node.left == null) return node.right;
+        node.left = deleteMin(node.left);
         return node;
     }
 
     private Node rotateLeft(Node h){
-        Node x = h.r;
-        h.r = x.l;
-        x.l = h;
+        Node x = h.right;
+        h.right = x.left;
+        x.left = h;
         x.color = h.color;
         h.color = RED;
         return x;
     }
 
     private Node rotateRight(Node h){
-        Node x = h.l;
-        h.l = x.r;
-        x.r = h;
+        Node x = h.left;
+        h.left = x.right;
+        x.right = h;
         x.color = h.color;
         h.color = RED;
         return x;
@@ -203,6 +203,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                 return inOrderIterator();
             case POST_ORDER:
                 return postOrderIterator();
+            case ZIGZAG_ORDER:
+                return zigzagOrderIterator();
             case LEVEL_ORDER:
                 return levelOrderIterator();
             default:
@@ -229,8 +231,48 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                 Key ans = null;
                 if(p != null){
                     ans = p.key;
-                    if(p.l != null) q.add(p.l);
-                    if(p.r != null) q.add(p.r);
+                    if(p.left != null) q.add(p.left);
+                    if(p.right != null) q.add(p.right);
+                }
+                return ans;
+            }
+        };
+    }
+
+    private Iterator<Key> zigzagOrderIterator() {
+        return new Iterator<Key>(){
+            boolean reversed;
+            Node p;
+            Queue<Node> q = new LinkedList<>();
+            Stack<Node> s = new Stack<>();
+            {
+                s.push(root);
+            }
+
+            @Override
+            public boolean hasNext() {
+                return !q.isEmpty() || !s.isEmpty();
+            }
+
+            @Override
+            public Key next() {
+                Key ans = null;
+                if(!q.isEmpty() && !reversed){
+                    p = q.poll();
+                    if(p != null){
+                        ans = p.key;
+                        if(p.left != null) s.push(p.left);
+                        if(p.right != null) s.push(p.right);
+                    }
+                } else {
+                    reversed = true;
+                    p = s.pop();
+                    if(p != null){
+                        ans = p.key;
+                        if(p.left != null) q.add(p.left);
+                        if(p.right != null) q.add(p.right);
+                    }
+                    if(s.isEmpty()) reversed = false;
                 }
                 return ans;
             }
@@ -267,10 +309,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                         while (p != null) {
                             Node node = p.first;
                             if(hasChildren(node)){
-                                if (node.r != null)
-                                    s.push(new Pair<>(node.r, false));
-                                if (node.l != null)
-                                    s.push(new Pair<>(node.l, false));
+                                if (node.right != null)
+                                    s.push(new Pair<>(node.right, false));
+                                if (node.left != null)
+                                    s.push(new Pair<>(node.left, false));
                             } else {
                                 node = s.pop().first;
                                 return node.key;
@@ -285,7 +327,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     }
 
     private boolean hasChildren(Node node) {
-        return node.l != null || node.r != null;
+        return node.left != null || node.right != null;
     }
 
     private Iterator<Key> inOrderIterator() {
@@ -304,19 +346,19 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             @Override
             public Key next() {
                 while(!s.isEmpty() || p != null){
-                    if(p != null && p.l != null) {
-                        s.push(p.l);
-                        p = p.l;
+                    if(p != null && p.left != null) {
+                        s.push(p.left);
+                        p = p.left;
                     }
                     else {
                         p = s.pop();
-                        if(p.r != null) s.push(p.r);
+                        if(p.right != null) s.push(p.right);
 
                         // save return value
                         Key next = p.key;
 
                         // update the pointer
-                        p = p.r;
+                        p = p.right;
                         return next;
                     }
                 }
@@ -342,8 +384,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             public Key next() {
                 p = stack.pop();
                 if(p != null) {
-                    if(p.r != null) stack.push(p.r);
-                    if(p.l != null) stack.push(p.l);
+                    if(p.right != null) stack.push(p.right);
+                    if(p.left != null) stack.push(p.left);
                     return p.key;
                 }
                 return null;
@@ -364,7 +406,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             case POST_ORDER:
                 postWalk(root, l);
                 break;
-            case LEVEL_ORDER:
+            case ZIGZAG_ORDER:
                 break;
         }
         return l;
@@ -373,25 +415,25 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
     private void preWalk(Node node, List<Value> list) {
         if(node == null) return;
         list.add(node.val);
-        preWalk(node.l, list);
-        preWalk(node.r, list);
+        preWalk(node.left, list);
+        preWalk(node.right, list);
     }
 
     private void inWalk(Node node, List<Value> list) {
         if(node == null) return;
-        inWalk(node.l, list);
+        inWalk(node.left, list);
         list.add(node.val);
-        inWalk(node.r, list);
+        inWalk(node.right, list);
     }
 
     private void postWalk(Node node, List<Value> list) {
         if(node == null) return;
-        postWalk(node.l, list);
-        postWalk(node.r, list);
+        postWalk(node.left, list);
+        postWalk(node.right, list);
         list.add(node.val);
     }
 
-    public List<Value> fastWalk(TreeIteratorOrder order) {
+    public List<Value> printWalk(TreeIteratorOrder order) {
         List<Value> l = new ArrayList<>();
 
         switch (order){
@@ -404,7 +446,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
             case POST_ORDER:
                 l = postWalkFast();
                 break;
-            case LEVEL_ORDER:
+            case ZIGZAG_ORDER:
                 break;
         }
         return l;
@@ -432,8 +474,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
                 //mark node
                 p.second = true;
                 if(hasChildren(p.first)){
-                    if(p.first.r != null) s.push(new Pair<>(p.first.r, false));
-                    if(p.first.l != null) s.push(new Pair<>(p.first.l, false));
+                    if(p.first.right != null) s.push(new Pair<>(p.first.right, false));
+                    if(p.first.left != null) s.push(new Pair<>(p.first.left, false));
                 } else {
                     // remove
                     p = s.pop();
@@ -449,6 +491,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> implements SymbolTa
         PRE_ORDER,
         IN_ORDER,
         POST_ORDER,
+        ZIGZAG_ORDER,
         LEVEL_ORDER
     }
 }
