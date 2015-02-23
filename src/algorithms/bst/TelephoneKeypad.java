@@ -24,9 +24,7 @@ public class TelephoneKeypad {
     private static int counter = 0;
 
     public static void main(String[] args) {
-        generateAllPossibleStrings("22777886644666"); // bruno
-//        generateAllPossibleStrings("278646"); // input do kova
-//        generateAllPossibleStrings("222"); // ab
+        generateAllPossibleStrings("22777886644666");
     }
 
     private static void generateAllPossibleStrings(String s) {
